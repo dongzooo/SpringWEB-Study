@@ -1,0 +1,85 @@
+package com.member.service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.mvc.condition.RequestConditionHolder;
+
+import com.member.domain.MemberVO;
+import com.member.mapper.MemberMapper;
+
+//서비스 구현 클래스 : 기능 구현
+@Service
+public class MemberServiceImpl implements MemberService {
+
+	@Autowired
+	private MemberMapper memberMapper;
+	
+	
+	//회원추가 가입처리 구현
+	@Override
+	public int addMember(MemberVO member) {
+		
+		//DB 접근해서추가
+		int result = memberMapper.addMember(member);
+		
+		return result;
+	}
+
+	//로그인 처리
+	@Override
+	public int idPwCheck(MemberVO member,  HttpSession session) {
+		int result = memberMapper.idPwCheck(member, session);
+		//로그인 성공
+		if (result ==1) {
+			//session에 memId라는 이름으로 사용자 id 추가 --> 로그인 확인용으로 사용할 것임
+			session.setAttribute("memId", member.getId());
+		}
+		// 0 = 로그인 실패
+		
+		return result;
+		
+	}
+
+	@Override
+	public int idPwCheck(MemberVO member) {
+		int result =memberMapper.idPwCheck(member);
+		
+//		ServletRequestAttributes sra= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
+//		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		
+		HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+		
+		if (result ==1) {
+			//session에 memId라는 이름으로 사용자 id 추가 --> 로그인 확인용으로 사용할 것임
+			session.setAttribute("memId", member.getId());
+		}
+		return result;
+	}
+
+	//회원정보 가져오기
+	@Override
+	public MemberVO getMember(String id) {
+		
+		MemberVO member =  memberMapper.getMember(id);
+		
+		return member; //컨트롤러한테 전달해 줄게
+	}
+
+	@Override
+	public MemberVO getMember() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
+	// 회원추가 가입처리
+	
+	
+
+}
