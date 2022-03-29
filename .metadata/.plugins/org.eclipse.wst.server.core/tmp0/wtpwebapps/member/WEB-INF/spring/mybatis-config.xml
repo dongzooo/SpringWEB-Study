@@ -19,8 +19,10 @@
   	<typeAliases>
   	
   	<typeAlias type="com.member.domain.MemberVO" alias="memberVO" />
+  	<typeAlias type="com.board.domain.BoardVO" alias="boardVO" />
   	
   	</typeAliases>
+  	
   
   
   </configuration>

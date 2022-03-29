@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.domain.MemberVO;
 import com.member.service.MemberService;
@@ -150,9 +154,51 @@ public class MemberController {
 		return "member/deletePro";
 	}
 	
+	//아이디 중복 확인 요청
+	@RequestMapping("idAvail")
+	public String idAvail(String id, Model model) {
+		System.out.println("id 중복확인 요청");
+		
+		int result = memberService.idAvail(id);
+		model.addAttribute("result", result); //result ==1: 이미 DB에 존재함, 사용불가, 0은 사용가능
+		model.addAttribute("trialId", id); 
+		
+		return "member/idAvail";
+	}
 	
+	/*
+	@RequestMapping("ajaxIdAvail")
+	@ResponseBody // 응답을 jsp 페이지가 아닌, body(ajax요청한 곳)으로 응답하겠따
+	public String ajaxIdAvail(String id) {
+		System.out.println("ajax idAvail");
+		int result = memberService.idAvail(id);
+		String resStr = "";
+		if(result == 1) {
+			resStr = "이미 존재합니다";
+		}else {
+			resStr = "사용가능합니다";
+		}
+		return resStr; //jsp페이자가 아닌 body로 응답해줄 데이터 전송 (데이터가 문자열이라 리턴타입도 String)
+	}
+	*/
 	
-	
+	//응답데이터의 한글깨짐 방지
+	@RequestMapping("ajaxIdAvail")
+	public ResponseEntity<String> ajaxIdAvail(String id) {
+		System.out.println("ajax idAvail");
+		int result = memberService.idAvail(id);
+		String resStr = "";
+		if(result == 1) {
+			resStr = "이미 존재합니다";
+		}else {
+			resStr = "사용가능합니다";
+		}
+		
+		//헤더정보
+		HttpHeaders responseHeader = new HttpHeaders();
+		responseHeader.add("Content-Type", "text/html;charset=utf-8");
+		return new ResponseEntity<String>(resStr, responseHeader, HttpStatus.OK); //jsp페이자가 아닌 body로 응답해줄 데이터 전송 (데이터가 문자열이라 리턴타입도 String)
+	}
 	
 	
 	

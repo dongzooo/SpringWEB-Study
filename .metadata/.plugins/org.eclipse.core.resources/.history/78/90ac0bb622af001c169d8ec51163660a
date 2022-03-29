@@ -1,0 +1,43 @@
+package com.board.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.board.domain.BoardVO;
+import com.board.mapper.BoardMapper;
+import com.board.service.BoardService;
+
+@Controller
+@RequestMapping("/board/")
+public class BoardController {
+
+   @Autowired
+   private BoardMapper boardMapper; 
+   
+   @GetMapping("write")
+   public void write() {
+      System.out.println("write get요청!!!");
+      
+      BoardVO board = new BoardVO(); 
+      board.setTitle("새로 작성글");
+      board.setContent("새 글 내용용");
+      board.setWriter("java02");
+      
+      boardMapper.insert(board);
+      System.out.println(board); // bno는 null, db에만 알아서 들어감 
+      System.out.println("**********");
+      
+      board.setTitle("새로 작성글2");
+      board.setContent("새 글 내용222");
+      board.setWriter("java02");
+      boardMapper.insertSelectKey(board);
+      System.out.println(board); // bno가 필요할때 사용가능.
+      
+   }
+
+
+}

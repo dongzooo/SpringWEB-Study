@@ -13,7 +13,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.member.domain.MemberVO;
 import com.member.mapper.MemberMapper;
 
-
 // 서비스 구현 클래스 : 기능 구현 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -28,7 +27,7 @@ public class MemberServiceImpl implements MemberService {
 		int result = memberMapper.addMember(member);
 		return result;
 	}
-
+	
 	/* 로그인 처리 (구번전)  
 	@Override
 	//public int idPwCheck(MemberVO member, HttpSession session) { // 세션방법#1.
@@ -177,8 +176,15 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 	}
-	
 
+	//아이디 중복확인 처리 메서드 구현
+	@Override
+	public int idAvail(String id) {
+		int count = memberMapper.idCount(id);
+		return count;
+	}
+	
+	
 	
 	
 	

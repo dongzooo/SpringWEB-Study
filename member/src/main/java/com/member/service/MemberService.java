@@ -30,5 +30,8 @@ public interface MemberService {
 	// 로그아웃 
 	public void logout(HttpServletResponse response); 
 	
+	//id 중복확인
+	public int idAvail(String id);
+	
 	
 }

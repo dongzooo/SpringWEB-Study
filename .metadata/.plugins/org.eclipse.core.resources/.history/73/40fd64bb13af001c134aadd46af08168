@@ -1,0 +1,10 @@
+package com.board.mapper;
+
+import org.apache.ibatis.annotations.Select;
+
+public interface BoardMapper {
+	
+	@Select
+	
+
+}

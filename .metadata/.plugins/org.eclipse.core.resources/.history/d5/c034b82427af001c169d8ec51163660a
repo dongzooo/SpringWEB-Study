@@ -1,0 +1,36 @@
+package com.board.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.board.domain.BoardVO;
+import com.board.mapper.BoardMapper;
+import com.board.service.BoardService;
+
+@Controller
+@RequestMapping("/board/")
+public class BoardController {
+
+   @Autowired
+	private BoardService boardService;
+ 
+   
+   @GetMapping("write")
+   public void write() {
+      System.out.println("write get요청!!!");
+      
+	  BoardVO vo =  new BoardVO();
+	  vo.setTitle("service테스트");
+	  vo.setContent("내용내용");
+	  vo.setWriter("java03");
+	  
+	  boardService.register(vo);
+      
+   }
+
+
+}

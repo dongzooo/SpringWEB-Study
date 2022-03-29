@@ -25,4 +25,7 @@ public interface MemberMapper {
 	//탈퇴시 회원정보 삭제
 	public int deleteMember(String id);
 	
+	//아이디 중복확인 처리
+	public int idCount(String id);
+	
 }

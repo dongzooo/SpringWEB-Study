@@ -1,0 +1,13 @@
+package com.board.service;
+
+import com.board.domain.BoardVO;
+
+public interface BoardService {
+	
+	//글저장
+	public void register(BoardVO board);
+	
+	//글하나 가져오가
+	public void get(Long bno);
+
+}

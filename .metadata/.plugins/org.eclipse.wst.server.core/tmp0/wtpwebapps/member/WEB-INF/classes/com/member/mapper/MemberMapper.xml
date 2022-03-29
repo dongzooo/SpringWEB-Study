@@ -26,4 +26,9 @@
  	<delete id="deleteMember">
  		delete from springMember where id=#{id}
  	</delete>
+ 	
+ 	<select id="idCount" resultType="int">
+ 		select count(*) from springMember where id = #{id}
+ 	</select>
+ 	
  </mapper>
