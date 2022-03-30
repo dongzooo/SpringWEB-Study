@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<title>content</title>
 	<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -38,12 +39,39 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<button onclick="window.location='/board/modify?bno=${board.bno}'">수정</button>
-				<button onclick="window.location='/board/delete?bno=${board.bno}'">삭제</button>
-				<button onclick="window.location='/board/list'">리스트</button>
+				<button class="btn" data-oper="modify" >수정</button>
+				<button class="btn" data-oper="delete">삭제</button>
+				<button class="btn" data-oper="list">리스트</button>
 			</td>
 		</tr>
 	</table>
+	<form action="/board/modify" method="get" >
+		<input type="hidden" name="bno" value="${board.bno}" />
+		<input type="hidden" name="pageNum" value="${cri.pageNum}" />
+		<input type="hidden" name="listQty" value="${cri.listQty}" />
+	</form>
+	
+	<script>
+	$(document).ready(function(){
+		// 숨김 폼태그 가져오기 
+		let formObj = $("form"); 
+		$("button.btn").click(function(e){
+			e.preventDefault(); 
+			let operation = $(this).data("oper");
+			
+			if(operation === 'delete'){
+				formObj.attr("action", "/board/delete"); 
+			}else if(operation === 'list'){
+				formObj.attr("action", "/board/list"); 
+			}
+			
+			formObj.submit(); // 이동 
+			
+		}); 
+	}); 
+	</script>
+	
+	
 
 </body>
 </html>

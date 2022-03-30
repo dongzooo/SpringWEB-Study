@@ -3,11 +3,18 @@ package com.board.mapper;
 import java.util.List;
 
 import com.board.domain.BoardVO;
+import com.board.domain.Criteria;
 
 public interface BoardMapper {
 
 	// 글 전체 가져오기 
 	public List<BoardVO> getList(); 
+	
+	//페이지
+	public List<BoardVO> getListWithPaging(Criteria cri);
+	
+	//잔체글 개수 가져오기
+	public int getTotalCount();
 	
 	// 글 DB에 저장  
 	public int insert(BoardVO vo); 

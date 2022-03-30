@@ -44,6 +44,23 @@
    	  	where bno = #{bno}
    </update>
    
+  <select id="getListWithPaging" resultType="boardVO">
+      <![CDATA[
+         select bno, title, content, writer, regdate, updatedate from
+             (select rownum r, bno, title, content, writer, regdate, updatedate from 
+                 (select /*+ INDEX_DESC(board pk_board)*/ 
+                  bno, title, content, writer, regdate, updatedate 
+                  from board) 
+             where rownum <= #{pageNum} * #{listQty} ) 
+         where r > (#{pageNum} - 1) * #{listQty}
+      ]]>
+   </select>
+   
+   <select id="getTotalCount" resultType="int">
+   	select count(*) from board
+   </select>
+   
+   
 
 
 </mapper>

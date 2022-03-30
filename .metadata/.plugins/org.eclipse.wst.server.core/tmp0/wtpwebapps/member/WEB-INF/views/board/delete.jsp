@@ -16,6 +16,8 @@
 				<td> [ #${board.bno}. ${board.title} ] <br />
 					이 게시글을 삭제 하시겠습니까?  <br /><br />
 					<input type="hidden" name="bno" value="${board.bno}" />
+					<input type="hidden" name="pageNum" value="${cri.pageNum}" />
+					<input type="hidden" name="listQty" value="${cri.listQty}" />
 					<input type="submit" value="삭제확인" />
 					<input type="button" value="취소" onclick="history.back()" />
 				</td>

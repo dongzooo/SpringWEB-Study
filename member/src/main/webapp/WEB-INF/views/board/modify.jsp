@@ -12,6 +12,8 @@
 	<br />
 	<h1 align="center"> 글 수정 </h1>
 	<form action="/board/modify" method="post">
+		<input type="hidden" name="pageNum" value="${cri.pageNum}" />
+		<input type="hidden" name="listQty" value="${cri.listQty}" />
 		<table>
 			<tr>
 				<td>글번호</td>
@@ -41,7 +43,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="수정" />
-					<input type="button" value="리스트" onclick="window.location='/board/list'" />
+					<input type="button" value="리스트" onclick="window.location='/board/list?pageNum=${cri.pageNum}&listQty=${cri.listQty}'" />
 				</td>
 			</tr>
 		</table>
