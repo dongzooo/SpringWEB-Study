@@ -18,6 +18,8 @@
 					<input type="hidden" name="bno" value="${board.bno}" />
 					<input type="hidden" name="pageNum" value="${cri.pageNum}" />
 					<input type="hidden" name="listQty" value="${cri.listQty}" />
+					<input type="hidden" name="type" value="${cri.type}" />
+					<input type="hidden" name="keyword" value="${cri.keyword}" />
 					<input type="submit" value="삭제확인" />
 					<input type="button" value="취소" onclick="history.back()" />
 				</td>

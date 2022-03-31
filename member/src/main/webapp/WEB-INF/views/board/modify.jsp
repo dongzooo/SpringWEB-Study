@@ -7,6 +7,8 @@
 	<meta charset="UTF-8">
 	<title>modify</title>
 	<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
 </head>
 <body>
 	<br />
@@ -14,6 +16,8 @@
 	<form action="/board/modify" method="post">
 		<input type="hidden" name="pageNum" value="${cri.pageNum}" />
 		<input type="hidden" name="listQty" value="${cri.listQty}" />
+		<input type="hidden" name="type" value="${cri.type}" />
+		<input type="hidden" name="keyword" value="${cri.keyword}" />
 		<table>
 			<tr>
 				<td>글번호</td>
@@ -42,12 +46,31 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="submit" value="수정" />
-					<input type="button" value="리스트" onclick="window.location='/board/list?pageNum=${cri.pageNum}&listQty=${cri.listQty}'" />
+				<button class="btn" data-oper="modify" >수정</button>
+				<button class="btn" data-oper="delete">삭제</button>
+				<button class="btn" data-oper="list">리스트</button>
 				</td>
 			</tr>
 		</table>
 	</form>
+	
+	<script type="text/javascript">
+	$(documnet).ready(function(){
+		let formObg = $("form");
+		$("button").click(function(e){
+			e.preventDefault();
+			let operation = $(this).data("oper");
+			if(operation === 'delete'){
+				formObj.attr("action", "/board/delete");
+				formObj.attr("method", "get"); // form 태그에 method를 post로 해놓아서 전송전에 get방식으로 변경
+			}else if(operation === 'list'){
+			formObj.attr("action", "/board/list");
+			formObj.attr("method", "get");
+			}
+			formObj.submit();
+		});
+	});
+	</script>
 	
 
 

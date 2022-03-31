@@ -21,5 +21,8 @@ public interface BoardService {
 	
 	public List<BoardVO> getList(Criteria cri);
 	
-	public int getTotal();
+	//전체글의 개수 가져오기
+	public int getTotal(Criteria cri);
+	
+
 }

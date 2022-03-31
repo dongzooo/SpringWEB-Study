@@ -36,8 +36,6 @@ public class BoardController {
 	}
 	@PostMapping("write")
 	public String writePro(BoardVO board, RedirectAttributes rttr) {
-		
-		
 		boardService.register(board);
 		log.info(board);
 		// 리다이렉트할때 데이터 전송하는 방법중 하나로, 
@@ -57,7 +55,7 @@ public class BoardController {
 		model.addAttribute("list", boardService.getList(cri));
 		
 		// 전체 글의 개수 가져오고 
-		int total = boardService.getTotal(); 
+		int total = boardService.getTotal(cri); 
 		// 화면에 띄워줄 페이지번호등 계산완료된 PageDTO 객체도 view전달 
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
@@ -78,6 +76,7 @@ public class BoardController {
 		
 		return "redirect:/board/list" + cri.getParameterLink(); 
 	}
+	
 	@PostMapping("delete")
 	public String delete(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
 		
@@ -86,6 +85,15 @@ public class BoardController {
 		}
 		
 		return "redirect:/board/list" + cri.getParameterLink();
+	}
+	
+	@GetMapping("test")
+	public void test() {
+		Criteria cri = new Criteria();
+		cri.setType("TC");
+		cri.setKeyword("안녕");
+		List<BoardVO> list = boardMapper.getListWithPaging(cri);
+		list.forEach(vo -> System.out.println(vo));
 	}
 	
 	

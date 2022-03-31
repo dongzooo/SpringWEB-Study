@@ -14,7 +14,7 @@ public interface BoardMapper {
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	
 	//잔체글 개수 가져오기
-	public int getTotalCount();
+	public int getTotalCount(Criteria cri);
 	
 	// 글 DB에 저장  
 	public int insert(BoardVO vo); 

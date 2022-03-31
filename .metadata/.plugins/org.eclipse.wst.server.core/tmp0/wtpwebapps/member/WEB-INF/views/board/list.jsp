@@ -55,10 +55,47 @@
 			<a class="paging_btn" href="${pageMaker.endPage + 1}" style="color: #77878F">&nbsp; &gt;</a>
 		</c:if>
 	</div>
+	
+	<div align="center">
+	<form action="/board/list" method="get">
+		<select name = "type">
+			 <option value=""
+				 <c:out value="${pageMaker.cri.type eq null ? 'selected' : '' }"/>
+			 >---</option>
+			 <option value="T"
+			 	<c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>
+			 >제목</option>
+			 <option value="C"
+				 <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : '' }"/>
+			 >내용</option>
+			 <option value="W"
+			 	 <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>
+			 >작성자</option>
+			 <option value="TC"
+			  	 <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : '' }"/>
+			 >제목 or 내용</option>
+			 <option value="TW"
+			  	 <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : '' }"/>
+			 >제목 or 작성자</option>
+			 <option value="TCW"
+			  	 <c:out value="${pageMaker.cri.type eq 'TCW' ? 'selected' : '' }"/>
+			 >제목 or 내용 or 작성자</option>
+		</select>
+		<input type = "text" name="keyword">
+		<input type = "hidden" name="pageNum" value = "${pageMaker.cri.pageNum }">
+		<input type = "hidden" name="listQty" value = "${pageMaker.cri.listQty }">
+		<input type = "submit" name="검색">
+	</form>
+		<button id="allBtn">전체 글보기</button>
+	</div>
+	
+	
 	<%-- 페이지 번호누를때 해당 페이지 요청해줄 숨김 폼태그 --%>
 	<form action="/board/list" method="get" id="pagingForm">
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
 		<input type="hidden" name="listQty" value="${pageMaker.cri.listQty}" />
+		<input type="hidden" name="type" value="${pageMaker.cri.type}" />
+		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}" />
 	</form>
 	<br /><br /><br /><br />
 
@@ -82,6 +119,7 @@
 					alert("요청처리가 잘 처리되었습니다.");
 				}else if(parseInt(result) > 0){
 					alert("게시글 " + result + "번이 등록되었습니다.");
+					
 				}
 			}// checkResult
 			
@@ -100,6 +138,17 @@
 				
 			}); // paging_btn click
 			
+			//전체 글보기 버튼
+			$("#allBtn").click(function(e){
+				//e.preventDefault();  // a 태그의 이동하는 기본 기능 없애기
+				console.log("전체글보기 btn 클릭!!" + e); 
+				pagingForm.find("input[name='pageNum']").val("1"); 
+				pagingForm.find("input[name='type']").val("");
+				pagingForm.find("input[name='keyword']").val("");
+				pagingForm.submit();
+
+			})
+			
 			// 게시글 제목 클릭시, content 페이지로 이동 처리 
 			$(".move").click(function(e){
 				e.preventDefault(); 
@@ -109,10 +158,6 @@
 				pagingForm.attr("action", "/board/content"); 
 				pagingForm.submit();  // 서브밋! 이동!! 
 			});
-			
-			
-		
-		
 		});// ready
 		
 	</script>
