@@ -1,0 +1,10 @@
+package com.board.domain;
+
+public class ReplyVO {
+	private Long rno;
+	private Long bno;
+	private String reply;
+	private String replyer;
+	private Timestamp 
+
+}

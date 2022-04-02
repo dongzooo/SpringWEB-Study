@@ -20,6 +20,7 @@
   	
   	<typeAlias type="com.member.domain.MemberVO" alias="memberVO" />
   	<typeAlias type="com.board.domain.BoardVO" alias="boardVO" />
+  	<typeAlias type="com.board.domain.ReplyVO" alias="replyVO" />
   	
   	</typeAliases>
   	

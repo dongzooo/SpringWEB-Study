@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +11,9 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
 	<br />
 	<h1 align="center"> Content </h1>
-	<table>
+	<table width="300px">
 		<tr>
 			<td>글번호</td>
 			<td>${board.bno}</td>
@@ -52,6 +53,115 @@
 		<input type="hidden" name="type" value="${cri.type}" />
 		<input type="hidden" name="keyword" value="${cri.keyword}" />
 	</form>
+	<br />
+	
+	<table width="300px">
+		<tr align="left">
+			<td> <b>댓글</b> </td>
+		</tr>	
+	</table>
+	
+	<table class="reply" width="300px">
+	
+	</table>
+	
+	<script type="text/javascript" src="/resources/js/reply.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//console.log(replyService);
+			
+			//댓글등록
+			let bnoVal = '<c:out value= "${board.bno}"/>';
+			let replyTable = $(".reply");
+			showList(1);
+			
+			//전체 댓글 목록 가져와 뿌리기(댓글 페이지번호 주면서)
+			function showList(page) {
+				//전체 댓글 가져오는 js함수 호출
+				replyService.getList({bno:bnoVal, page:page||1}, function(data){//data= 서버에서 전달해준 댓글 리스트
+				// 서버에서 댓글을 보내줬는지 확인 (댓글이 없는 본문은 안가져옴)
+					if(data==null || data.length ==0){
+						replyTable.html("");
+						return ;//아래는 실행할 필요없으니 강제종료
+					}
+				
+					let str = ""; //화면에 댓글 tr묶음, html을 만들어서 저장해 놓을 변수
+					let len= data.length||0;
+					/*
+					<tr data-rno="100">
+						<td align="left">
+							<b>작성자</b> <br>
+							포기하지 마세요 <br>
+							<font size="0.5rem"> update date</font> 
+						</td>
+					</tr>
+					*/
+					for(let i =0 ; i< len; i++){
+						str += "<tr data-rno='" +data[i].rno+" '>";
+						str += " <td align='left'>";
+						str += " <b>"+ data[i].replyer + "</b> <br />";
+						str += " " + data[i].reply + "<br />";
+						str += "<font size='0.5rem'>" + replyService.displayTimeFormat(data[i].updateDate) + "</font>";
+						str += "</td></tr>";
+					}
+					replyTable.html(str); //테이블에 tr 묶음들 모은 문자열 str 배치
+				}); // replyServie.getList
+			} ///showList
+			
+			
+			
+			/*
+			replyService.add(
+				{reply : "js tset!!", replyer : "test00", bno:bnoVal},
+				function(result){
+					alert(result)
+				}
+			)
+			
+			//댓글 전체 가져오기
+			replyService.getList({bno:bnoVal, page:1}, function(data){
+				let len= data.length||0;
+				
+				for(let i =0 ; i< len; i++){
+					console.log(data[i]);
+				}
+			});
+			
+			//댓글삭제
+			
+			replyService.remove(12, 
+				function(result){
+					console.log(result);
+					if(result == "success"){
+						alert("삭제완료!!!");
+					}
+				}, function(e){
+					alert(e);
+				}
+			);
+			
+			//댓글수정
+			replyService.update({
+				rno : 6,
+				bno : bnoVal,
+				reply : "수정 ajax 댓글"
+			}, function(result){
+				alert("수정완료!!!");
+			} );
+			*/
+			
+			//댓글 한 개 조회
+			replyService.get(5, function(result){
+				console.log(result);
+			});
+			
+			
+			
+			
+			
+		});
+	</script>
 	
 	<script>
 	$(document).ready(function(){
