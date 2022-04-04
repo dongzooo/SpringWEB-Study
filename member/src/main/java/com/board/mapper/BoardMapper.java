@@ -10,14 +10,14 @@ public interface BoardMapper {
 	// 글 전체 가져오기 
 	public List<BoardVO> getList(); 
 	
-	//페이지
-	public List<BoardVO> getListWithPaging(Criteria cri);
+	// 페이징처리해서 전체 글 가져오기 
+	public List<BoardVO> getListWithPaging(Criteria cri); 
 	
-	//잔체글 개수 가져오기
+	// 전체 글의 개수 가져오기 
 	public int getTotalCount(Criteria cri);
 	
 	// 글 DB에 저장  
-	public int insert(BoardVO vo); 
+	public int insert(BoardVO vo);
 	public int insertSelectKey(BoardVO vo);
 	
 	// 글 하나 가져오기 

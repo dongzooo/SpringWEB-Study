@@ -13,7 +13,7 @@
 	<h3> memId : ${sessionScope.memId}</h3>
 	
 	<%-- 로그아웃 상태 --%>
-	<c:if test="${sessionScope.memId == null}"> 
+	<c:if test="${sessionScope.memId == null}">
 		<table>
 			<tr>
 				<td>
@@ -27,10 +27,10 @@
 				</td>
 			</tr>
 		</table>
-	</c:if> 
+	</c:if>
 	
 	<%-- 로그인 상태 --%>
-	<c:if test="${sessionScope.memId != null}">
+	<c:if test="${sessionScope.memId != null}">  
 		<table>
 			<tr>
 				<td>
@@ -43,7 +43,7 @@
 				</td>
 			</tr>
 		</table>
-	</c:if> 
+	</c:if>
 	
 	
 	

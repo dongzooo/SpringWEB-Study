@@ -36,6 +36,8 @@ public class BoardController {
 	}
 	@PostMapping("write")
 	public String writePro(BoardVO board, RedirectAttributes rttr) {
+		
+		
 		boardService.register(board);
 		log.info(board);
 		// 리다이렉트할때 데이터 전송하는 방법중 하나로, 
@@ -66,7 +68,7 @@ public class BoardController {
 		model.addAttribute("board", boardService.get(bno)); 
 	}
 	
-	@PostMapping("modify")
+	@PostMapping("modify") 
 	public String modify(BoardVO board, Criteria cri, RedirectAttributes rttr) {
 		System.out.println(cri);
 		boolean res = boardService.modify(board);
@@ -76,7 +78,6 @@ public class BoardController {
 		
 		return "redirect:/board/list" + cri.getParameterLink(); 
 	}
-	
 	@PostMapping("delete")
 	public String delete(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
 		
@@ -89,12 +90,16 @@ public class BoardController {
 	
 	@GetMapping("test")
 	public void test() {
-		Criteria cri = new Criteria();
+		
+		Criteria cri = new Criteria(); 
 		cri.setType("TC");
-		cri.setKeyword("안녕");
-		List<BoardVO> list = boardMapper.getListWithPaging(cri);
+		cri.setKeyword("w");
+		
+		List<BoardVO> list = boardMapper.getListWithPaging(cri); 
 		list.forEach(vo -> System.out.println(vo));
+		
 	}
+	
 	
 	
 	

@@ -15,7 +15,7 @@ SELECT {
 	FONT-SIZE: 9pt; COLOR: #77878F; LINE-HEIGHT: 160%; FONT-FAMILY: 맑은 고딕,verdana,tahoma
 }
 DIV {
-	FONT-SIZE: 9pt; COLOR: #fff; LINE-HEIGHT: 160%; FONT-FAMILY: 맑은 고딕,verdana,tahoma
+	FONT-SIZE: 9pt; COLOR: #fff; LINE-HEIGHT: 160%; FONT-FAMILY: 맑은 고딕,verdana,tahoma;
 }
 FORM {
 	FONT-SIZE: 9pt; COLOR: #fff; LINE-HEIGHT: 160%; FONT-FAMILY: 맑은 고딕,verdana,tahoma
@@ -33,6 +33,8 @@ BUTTON {
 A:link {text-decoration:none;color:#E1E8E7}
 A:hover{text-decoration:yes;color:#77878F}
 A:visited {text-decoration:none;color:#89488A}
+
+
 
 .darktext {
 	color:#77878F

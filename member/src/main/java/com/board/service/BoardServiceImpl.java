@@ -30,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean modify(BoardVO board) {
-		return boardMapper.update(board) == 1; 
+		return boardMapper.update(board) == 1;
 	}
 
 	@Override
@@ -38,23 +38,20 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.delete(bno) == 1;
 	}
 
-//	@Override
-//	public List<BoardVO> getList() {
-//		return boardMapper.getList();
-//	}
-
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
-		// TODO Auto-generated method stub
+		//return boardMapper.getList();
 		System.out.println(cri);
 		return boardMapper.getListWithPaging(cri);
 	}
 
 	@Override
 	public int getTotal(Criteria cri) {
-		// TODO Auto-generated method stub
 		return boardMapper.getTotalCount(cri);
 	}
-
-
+	
+	
+	
+	
+	
 }

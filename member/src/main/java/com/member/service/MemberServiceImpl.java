@@ -13,6 +13,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.member.domain.MemberVO;
 import com.member.mapper.MemberMapper;
 
+
 // 서비스 구현 클래스 : 기능 구현 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -27,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 		int result = memberMapper.addMember(member);
 		return result;
 	}
-	
+
 	/* 로그인 처리 (구번전)  
 	@Override
 	//public int idPwCheck(MemberVO member, HttpSession session) { // 세션방법#1.
@@ -76,7 +77,8 @@ public class MemberServiceImpl implements MemberService {
 		member.setId(id);  // member에 id값도 체워서 mapper에 보내기 
 		
 		int result = memberMapper.updateMember(member);
-	
+		// 비밀번호 갱신했으면, 쿠키 변경 
+		
 		
 		return result; // 컨트롤러에서 갱신된 레코드수 돌려주기 
 	}
@@ -98,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
 			System.out.println("S delete result : " + deleteRes); // 개발자만 확인 
 			// 로그아웃 
 			//session.invalidate();
-			logout(response);
+			logout(response); // 세션지우고, 쿠키도 삭제 
 		}
 		// 안맞으면 아무것도 안함 
 		
@@ -116,7 +118,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int login(MemberVO member, String auto, HttpServletResponse response) {
 		
-		// member가 안들어올경우 객체 생성만 해주고 
+		// member가 안들어올경우 객체 생성만 해주고 (변수에 값은 비어있음) 
 		if(member == null) {
 			member = new MemberVO();
 		}
@@ -124,7 +126,7 @@ public class MemberServiceImpl implements MemberService {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 
 		Cookie[] coos = request.getCookies(); 
 		if(coos != null) {
-			for(Cookie c : coos) { //쿠키가 있으면 member 객체에 들어감
+			for(Cookie c : coos) { // 쿠키가 있으면 member객체에 id,pw 체우기 
 				if(c.getName().equals("cookieId")) member.setId(c.getValue());
 				if(c.getName().equals("cookiePw")) member.setPw(c.getValue());
 				if(c.getName().equals("cookieAuto")) auto = c.getValue();
@@ -146,7 +148,7 @@ public class MemberServiceImpl implements MemberService {
 				c1.setMaxAge(60*60*24); // 24시간 
 				c2.setMaxAge(60*60*24); // 24시간 
 				c3.setMaxAge(60*60*24); // 24시간 
-				c1.setPath("/");  //모든 경로에서 쿠키생성
+				c1.setPath("/");
 				c2.setPath("/");
 				c3.setPath("/");
 				response.addCookie(c1);
@@ -168,23 +170,25 @@ public class MemberServiceImpl implements MemberService {
 		if(coos != null) {
 			for(Cookie c : coos) {
 				if(c.getName().equals("cookieId") || c.getName().equals("cookiePw") || c.getName().equals("cookieAuto")) {
-					c.setPath("/"); // 경로도 일치시켜야 한다
+					c.setPath("/");
 					c.setMaxAge(0);
-					response.addCookie(c); // 쿠키는 삭제 개념이 없다. 쿠키의 유효기간을 0으로 만들어주는 것이 없애는 것
+					response.addCookie(c);
 				}
 			}
 		}
 		
 	}
 
-	//아이디 중복확인 처리 메서드 구현
+	// 아이디 중복확인 처리 메서드 구현 
 	@Override
 	public int idAvail(String id) {
-		int count = memberMapper.idCount(id);
+		
+		int count = memberMapper.idCount(id); 
+		
 		return count;
 	}
 	
-	
+
 	
 	
 	

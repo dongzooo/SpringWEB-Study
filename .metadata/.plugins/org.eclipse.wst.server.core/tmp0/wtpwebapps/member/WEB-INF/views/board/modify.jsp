@@ -8,7 +8,6 @@
 	<title>modify</title>
 	<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	
 </head>
 <body>
 	<br />
@@ -46,32 +45,31 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-				<button class="btn" data-oper="modify" >수정</button>
-				<button class="btn" data-oper="delete">삭제</button>
-				<button class="btn" data-oper="list">리스트</button>
+					<button type="submit" class="btn" data-oper="modify" >수정</button>
+					<button type="submit" class="btn" data-oper="delete">삭제</button>
+					<button type="submit" class="btn" data-oper="list">리스트</button>
 				</td>
 			</tr>
 		</table>
 	</form>
-	
-	<script type="text/javascript">
-	$(documnet).ready(function(){
-		let formObg = $("form");
+	<script>
+	$(document).ready(function(){
+		let formObj = $("form"); 
 		$("button").click(function(e){
-			e.preventDefault();
+			e.preventDefault(); 			
 			let operation = $(this).data("oper");
-			if(operation === 'delete'){
-				formObj.attr("action", "/board/delete");
-				formObj.attr("method", "get"); // form 태그에 method를 post로 해놓아서 전송전에 get방식으로 변경
+			if(operation === 'delete') {
+				formObj.attr("action", "/board/delete"); // 삭제폼 GET 
+				formObj.attr("method", "get"); // form 태그에 method를 post로 해놓아서 
+												// 전송전에 get방식으로 변경 
 			}else if(operation === 'list'){
-			formObj.attr("action", "/board/list");
-			formObj.attr("method", "get");
+				formObj.attr("action", "/board/list"); // 게시판리스트 GET
+				formObj.attr("method", "get");
 			}
 			formObj.submit();
 		});
 	});
 	</script>
-	
 
 
 </body>

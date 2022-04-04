@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.ReplyMapper2">
+   <insert id="insert">
+   		<selectKey keyProperty="rno" order="BEFORE">
+   			select reply_seq2.nextval from dual
+   		</selectKey>
+   
+   		insert into reply2(rno, bno, reply, replyer,grp, step,lev)
+   		values(#{rno}, #{bno}, #{reply}, #{replyer}, #{rno},#{step},#{lev})
+   </insert>
+   
+   <select id="read" resultType="replyVO2">
+   select * from reply2 where rno=#{rno} 
+   </select>
+
+	<delete id="delete" >
+		delete from reply2 where rno=#{rno}
+	</delete>
+	
+	<update id="update">
+		update reply set reply = #{reply}, replyDate=sysdate
+		where rno = #{rno}
+	</update>
+
+	<select id="getList" resultType="replyVO2">
+		select * from reply2 where bno = #{bno} order by rno desc
+	</select>
+	
+	<select id="getListWithPaging" resultType="replyVO2">
+		<![CDATA[
+			select rno, bno, reply, replyer, replyDatem grp, step, lev
+			from
+				(select rownum r ,rno, bno, reply, replyer, replyDatem grp, step, lev
+				from
+				 (select rno, bno, reply, replyer, replyDatem grp, step, lev
+				 from reply2 where bno = #{bno}
+				 order by grp desc, step asc
+				 )
+				where rownum <= #{cri.pageNum} * #{cri.listQty}
+				 )
+			where r > ( #{cri.pageNum} -1) * #{cri.listQty}		
+		
+		]]>
+	</select>
+	
+	
+	
+	
+</mapper>

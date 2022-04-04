@@ -3,29 +3,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<title>jq01</title>
-	<script src= "https://code.jquery.com/jquery-3.6.0.min.js"> 
-	
-	</script>
-	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<button onclick= "test()">btnJs</button>
-	<button onclick= "test()">btnjQiery</button>
 
-	<script type="text/javascript">
-	function test(){
-		alert("test!");
-		
-	}
-	
-	//jquery
-	$(document).ready(function(){
-		$("button").click(function(){
-			alert("jq TEST!!");
+	<button>btnJS</button>
+	<button>btnJQuery</button>
+
+	<script>
+		// script 
+		function test() {
+			alert("test!!!!");
+		}
+		// jquery
+		$(document).ready(function(){
+			$("button").click(function(){
+				alert("jquery test!!!!!!");
+			});
 		});
-	});
+		
+	
 	
 	
 	</script>
