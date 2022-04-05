@@ -67,6 +67,10 @@
 	]]>
 	</select>
 	
+	<!-- #1. 전체 댓글의 개수 가져오기 -->
+	<select id="getRepCount" resultType="int">
+		select count(*) from reply2 where bno=#{bno}
+	</select>
 
 
 

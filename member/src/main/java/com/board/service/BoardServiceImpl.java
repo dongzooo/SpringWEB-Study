@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
 import com.board.mapper.BoardMapper;
+import com.board.mapper.ReplyMapper2;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardMapper boardMapper;
+	@Autowired
+	private ReplyMapper2 replyMapper;
 	
 	
 	@Override
@@ -35,6 +38,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean remove(Long bno) {
+		// 해당 글의 댓글들 모두 삭제 
+		replyMapper.deleteReply(bno);
+		// 본문 글도 삭제 
 		return boardMapper.delete(bno) == 1;
 	}
 

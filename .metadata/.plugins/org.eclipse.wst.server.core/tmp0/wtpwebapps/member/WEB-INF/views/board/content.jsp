@@ -112,6 +112,14 @@
 		.reply_btns {
 			margin: 0.3rem 0;
 		}
+		.replyPaging {
+			margin: 0.5rem auto;
+			padding: 1rem 1.5rem;
+			width: 80%;
+			background-color: #AAB9BD;
+			display: flex;
+			justify-content: right;
+		}
 	</style>
 	<div class="inner">
 		<div class="reply_container">
@@ -125,6 +133,12 @@
 		<div class="reply_list_container">
 			
 		</div>
+		
+		<%-- #7. 댓글 페이지 번호 띄울 div 추가  --%>
+		<div class="replyPaging">
+		
+		</div>
+		
 	</div>
 	<br /><br />
 	
@@ -138,8 +152,16 @@
 		
 		//전체 댓글 목록 가져와 뿌리기(댓글 페이지번호 주면서) 
 		function showList(page){
+			console.log("page : " + page); 
 			// 전체 댓글 가져오는 js 함수 호출 
-			replyService.getList({bno:bnoVal, page:page||1}, function(data){ // data = 서버에서 전달해준 댓글 리스트 
+			//replyService.getList({bno:bnoVal, page:page||1}, function(data){ // data = 서버에서 전달해준 댓글 리스트 
+			// #6. callback 함수 매개변수 수정, 안쪽 코드 수정/추가 
+			replyService.getList({bno:bnoVal, page:page||1}, function(replyCount, data){ // replyCount, data 매개변수 2개로 수정  
+				// #6. 추가 
+				console.log("replyCount : " + replyCount);
+				console.log("data : " + data);
+			
+			
 				// 서버에서 댓글을 보내줬는지 확인 (댓글이 없는 본문은 안가져옴)
 				if(data == null || data.length == 0){
 					list_container.html("<div class='reply_li'>댓글이 없습니다</div>");
@@ -167,9 +189,53 @@
 				}
 				
 				list_container.html(str); // list_container div 태그 안을 댓글목록만들어놓은 str로 변경 
+				// #9. 댓글 페이징번호 띄우기 함수 호출 
+				showReplyPaging(replyCount);
 				
 			});// replyService.getList
 		}// showList
+		
+		// #8. 댓글 페이지 번호 출력 로직 추가 
+		let pageNum = 1; 
+		let replyPaging = $(".replyPaging");  // 댓글 페이지번호 띄울 div 태그 가져오기 
+		function showReplyPaging(replyCount) {
+			let endNum = Math.ceil(pageNum / 10.0) * 10;  // 마지막 페이지 번호 (일단 10개로 보이게) 
+			let startNum = endNum - 9; 	// 시작 페이지 번호 
+			let prev = startNum != 1;  	// 이전버튼  보일지 여부 
+			let next = false; 			// 다음버튼 일단 false
+			if(endNum * 10 >= replyCount) { // 페이지 번호 10개에 보여줘야되는 댓글수보다 전체 댓글 수가 적거나 같으면 
+				endNum = Math.ceil(replyCount / 10.0); // 마지막 페이지 번호를 전체 나오는 페이지 수로 변경 
+			}
+			if(endNum * 10 < replyCount) { // 지금 보는 마지막 페이지번호에 보여줄 댓글수 보다 전체 댓글 수가많으면  
+				next = true; //next 보여주기 값을 변경 
+			}
+			// 페이지 번호 띄워줄 html 구성 
+			let str = "<div class='replyPaing_content'>";
+			if(prev) {
+				str += "<a class='paging_link' href='"+(startNum-1)+"'> prev </a> ";
+			}
+			for(let i = startNum; i <= endNum; i++){
+				str += "<a class='paging_link' href='"+i+"'>&nbsp; "+i+" &nbsp;</a>";
+			}
+			if(next){
+				str += " <a class='paging_link' href='"+(endNum+1)+"'> next </a></div>";
+			}
+			
+			replyPaging.html(str);
+			// => showList에 showReplyPaging() 호출 추가 
+		} 
+		
+		// #10. 댓글 페이지 번호 이벤트 등록 
+		replyPaging.on("click", "a.paging_link", function(e){
+			e.preventDefault(); 	
+			let pageLink = $(this).attr("href");
+			console.log(pageLink); 
+			pageNum = pageLink; 
+			showList(pageNum);
+		});
+		
+		
+		
 		
 		// 새 댓글 등록
 		$(".newReplyBtn").click(function(e){
@@ -277,7 +343,9 @@
 				reply : modifTxt
 			}, function(result){
 				alert("수정 완료!!!");
-				showList(1);
+				//showList(1);
+				// #11. 보던페이지로 이동 
+				showList(pageNum);
 			});
 			
 		});
@@ -297,7 +365,9 @@
 					console.log(result); 
 					if(result === "success"){
 						alert("삭제 완료!!!"); 
-						showList(1); 
+						//showList(1); 
+						// #11. 보던페이지로 이동 
+						showList(pageNum);
 					}
 				},function(e){
 					alert(e);	

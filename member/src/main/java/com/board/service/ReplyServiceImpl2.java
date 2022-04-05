@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.board.domain.Criteria;
+import com.board.domain.ReplyPageDTO;
 import com.board.domain.ReplyVO2;
 import com.board.mapper.ReplyMapper2;
 
@@ -63,6 +64,12 @@ public class ReplyServiceImpl2 implements ReplyService2 {
 		log.info("get reply list bno : " + bno);
 		log.info("get reply list cri : " + cri);
 		return replyMapper.getListWithPaging(bno, cri);
+	}
+
+	// #3. 댓글 페이징 DTO 로 리턴해주는 댓글 목록 조회 
+	@Override
+	public ReplyPageDTO getListPage(Long bno, Criteria cri) {
+		return new ReplyPageDTO(replyMapper.getRepCount(bno), replyMapper.getListWithPaging(bno, cri));
 	}
 
 

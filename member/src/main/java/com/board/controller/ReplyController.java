@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.board.domain.Criteria;
+import com.board.domain.ReplyPageDTO;
 import com.board.domain.ReplyVO2;
 import com.board.service.ReplyService2;
 
@@ -59,7 +60,9 @@ public class ReplyController {
 	@GetMapping(value="/pages/{bno}/{page}",
 			produces = { MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<ReplyVO2>> getList(
+	// #4. 메서드 리턴타입과 리턴값 변경 
+	//public ResponseEntity<List<ReplyVO2>> getList(
+	public ResponseEntity<ReplyPageDTO> getList(
 			@PathVariable("page") int page,
 			@PathVariable("bno") Long bno) {
 		
@@ -68,7 +71,10 @@ public class ReplyController {
 		Criteria cri = new Criteria(page, 10); 
 		log.info("new cri " + cri);
 		
-		return new ResponseEntity<>(replyService.getList(bno, cri), HttpStatus.OK); 
+		// #4. getListPage() 로 변경 
+		//return new ResponseEntity<>(replyService.getList(bno, cri), HttpStatus.OK); 
+		return new ResponseEntity<>(replyService.getListPage(bno, cri), HttpStatus.OK); 
+		
 	}
 	
 	// 댓글 한개 조회 

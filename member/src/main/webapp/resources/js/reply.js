@@ -5,15 +5,17 @@ console.log("Reply JS 모듈....");
 
 // 자바의 replyService 구현 클래스격
 var replyService = (function(){
+	
 	// 댓글 등록 처리 
 	// reply = 추가할 댓글 정보, callback = 추가 후 실행할 함수, error = 에러발생시 실행할 함수
 	function add(reply, callback, error) {
 		console.log("reply add!!!!!"); 
+		console.log(reply);
 		$.ajax({
 			type: "post",
 			url: "/replies/new",
 			data: JSON.stringify(reply),
-			contentType: "application/json;charset=utf-8",
+			contentType: "application/json;charset=utf-8", 
 			success : function(result, status, xhr) {
 				if(callback){
 					callback(result);
@@ -34,7 +36,9 @@ var replyService = (function(){
 		$.getJSON("/replies/pages/"+bno+"/"+page+".json", 
 			function(data){
 				if(callback){
-					callback(data); 
+					//callback(data); 
+					// #5. 콜백 수정 : list, count 두개 꺼내 매개변수로 추가 : 댓글 개수와 목록 가져오겠다 
+					callback(data.replyCount, data.list); 
 				}
 			})
 		.fail(function(xhr, status, e){
