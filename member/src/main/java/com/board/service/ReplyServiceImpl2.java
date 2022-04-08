@@ -69,6 +69,9 @@ public class ReplyServiceImpl2 implements ReplyService2 {
 	// #3. 댓글 페이징 DTO 로 리턴해주는 댓글 목록 조회 
 	@Override
 	public ReplyPageDTO getListPage(Long bno, Criteria cri) {
+		// ReplyPageDTO 객체생성해서 리턴 
+		// 생성자 매개변수 1 : 전체 댓글의 개수 조회해서 넣기 
+		// 생성자 매개변수 2 : 해당 페이지에 보여줄 댓글 목록 가져와 담기 
 		return new ReplyPageDTO(replyMapper.getRepCount(bno), replyMapper.getListWithPaging(bno, cri));
 	}
 

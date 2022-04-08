@@ -196,7 +196,7 @@
 		}// showList
 		
 		// #8. 댓글 페이지 번호 출력 로직 추가 
-		let pageNum = 1; 
+		let pageNum = 1;  // 댓글 페이지 번호를 들고 있을 변수 
 		let replyPaging = $(".replyPaging");  // 댓글 페이지번호 띄울 div 태그 가져오기 
 		function showReplyPaging(replyCount) {
 			let endNum = Math.ceil(pageNum / 10.0) * 10;  // 마지막 페이지 번호 (일단 10개로 보이게) 
@@ -227,15 +227,12 @@
 		
 		// #10. 댓글 페이지 번호 이벤트 등록 
 		replyPaging.on("click", "a.paging_link", function(e){
-			e.preventDefault(); 	
-			let pageLink = $(this).attr("href");
+			e.preventDefault();  // a 태그의 default기능(이동) 무시해라~	
+			let pageLink = $(this).attr("href"); // 클릭한 a태그의 href 값 가져오기 (이동할 댓글페이지번호)
 			console.log(pageLink); 
-			pageNum = pageLink; 
-			showList(pageNum);
+			pageNum = pageLink; // 밖에 만들어놓은 현재 페이지 변수에 덮어쓰기 
+			showList(pageNum); 
 		});
-		
-		
-		
 		
 		// 새 댓글 등록
 		$(".newReplyBtn").click(function(e){

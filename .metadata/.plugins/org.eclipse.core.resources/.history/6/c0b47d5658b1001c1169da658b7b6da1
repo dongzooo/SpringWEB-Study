@@ -1,8 +1,0 @@
-package com.board.mapper;
-
-import com.board.domain.ReplyVO;
-
-public interface ReplyMapper {
-	//댓글등록
-	public int insert(ReplyVO vo);
-}

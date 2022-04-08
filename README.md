@@ -27,10 +27,10 @@ Spring study for web backend development
 
 ### 2. BoardController 구조
 		
-	    URL		Method	설명				JSP 페이지 
-	    ------------------------------------------------------------------------
-	    /board/list	GET	게시판 목록 			list.jsp
-	    /board/write	GET	글작성 폼 			write.jsp
+    	URL		Method	설명				JSP 페이지 
+    	------------------------------------------------------------------------
+    	/board/list	GET	게시판 목록 			list.jsp
+    	/board/write	GET	글작성 폼 			write.jsp
     	/board/write	POST	글작성 처리 
     	/board/content	GET	글내용(본문) 			content.jsp
     	/board/modify	GET	글 수정 폼 			modify.jsp 
@@ -51,3 +51,24 @@ Spring study for web backend development
 		수정		/replies/{rno}			PUT 
 		*전체글(페이지)	/replies/pages/{bno}/{page}	GET
 		-----------------------------------------------------------
+
+### 4. KakaoController 구조 
+
+	    	요청 URL 정리 
+	    	URL						Method		설명 
+	    	----------------------------------------------------------------------------------------
+	    	/kakao/kakaoPay					GET		결제 폼페이지 
+	    	/kakao/kakaoPay					POST		카카오 결제 요청 
+	
+	    	* 카카오api에서 지정한 요청 주소 
+	    	https://kapi.kakao.com/v1/payment/ready		POST		카카오 결제 준비 요청 
+	    	https://kapi.kakao.com/v1/payment/approve	POST		카카오 결제 승인 요청 
+	    	----------------------------------------------------------------------------------------
+
+	    	1) 스프링에서 HTTP 요청할 때 사용하는 방법들 RestTemplate, WebClient
+	    		-> RestAPI로 통신을 할수있는 클래스 
+
+	    		RestTemplate
+	    			HTTP 통신에 유용한 템플릿, REST 서비스를 호출하도록 설계되어
+	    			요청 method GET POST DELETE PUT 에 맞게 여러 메서드 제공 
+			

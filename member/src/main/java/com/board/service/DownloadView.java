@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
-//다운처리 클래스
+// 다운처리 클래스 
 public class DownloadView extends AbstractView {
 	
 	public DownloadView() {

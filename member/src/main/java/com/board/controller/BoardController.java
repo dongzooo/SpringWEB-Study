@@ -25,6 +25,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class BoardController {
 
+	// 브라우저 -> C -> S -> M -> DB 
+	
 	@Autowired
 	private BoardService boardService; 
 	@Autowired
@@ -36,8 +38,7 @@ public class BoardController {
 	}
 	@PostMapping("write")
 	public String writePro(BoardVO board, RedirectAttributes rttr) {
-		
-		
+		// DB에 저장처리 
 		boardService.register(board);
 		log.info(board);
 		// 리다이렉트할때 데이터 전송하는 방법중 하나로, 
@@ -79,11 +80,9 @@ public class BoardController {
 	}
 	@PostMapping("delete")
 	public String delete(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
-		
 		if(boardService.remove(bno)) {
 			rttr.addFlashAttribute("result", "success"); 
 		}
-		
 		return "redirect:/board/list" + cri.getParameterLink();
 	}
 	
@@ -99,10 +98,7 @@ public class BoardController {
 		
 	}
 	
-	
-	
-	
-	
+
 	
 
 	

@@ -30,6 +30,10 @@
 		<property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml" />
 	</bean>
 	
+	<!-- 카카오페이시 요청처리해줄 RestTemplate 빈으로 등록 -->
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate"  />
+	
+	
 	<!-- mybatis로 mapper 패키지 스캔 추가 -->
 	<mybatis-spring:scan base-package="com.member.mapper"/>
 	<mybatis-spring:scan base-package="com.board.mapper"/>
