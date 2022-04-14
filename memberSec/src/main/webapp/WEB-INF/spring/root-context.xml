@@ -20,8 +20,8 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" /> 
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@javaking.iptime.org:1521:ORCL" />
-		<property name="username" value="java01" />
-		<property name="password" value="java01" />
+		<property name="username" value="" />
+		<property name="password" value="" />
 	</bean>  
 	<!-- 커넥션 맺어줄때 사용하는 클래스 등록 -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
