@@ -9,14 +9,9 @@
 </head>
 <body>
 	<%-- 로그인 안했을때, alert 띄우고 로그인폼으로 이동 --%>
-	<c:if test="${sessionScope.memId == null}"> 
-		<script>
-			alert("로그인 후 사용가능합니다."); 
-			window.location.href="/member/login"; 
-		</script>
-	</c:if>
+	
 	<%-- 로그인 했을때 보여주기  --%>
-	<c:if test="${sessionScope.memId != null}"> 
+	
 		<br />
 		<h1 align="center"> 마이페이지 </h1>
 		<table>
@@ -30,7 +25,7 @@
 				<td><a href="/member/main">메인</a></td>
 			</tr>
 		</table>
-	</c:if>
+
 
 </body>
 </html>

@@ -9,15 +9,9 @@
 </head>
 <body>
 	<%-- 비로그인, --%>
-	<c:if test="${sessionScope.memId == null}"> 
-		<script>
-			alert("로그인 후 사용가능합니다."); 
-			window.location.href="/member/login"; 
-		</script>
-	</c:if>
+	
 
 	<%-- 로그인시,  --%>
-	<c:if test="${sessionScope.memId != null}">
 		<br />
 		<h1 align="center"> 회원 탈퇴 </h1>
 		<form action="/member/delete" method="post">
@@ -36,6 +30,5 @@
 				</tr>
 			</table>
 		</form>
-	</c:if>
 </body>
 </html>

@@ -94,12 +94,22 @@ public class MemberController {
 	
 	// 로그인 처리 
 	@PostMapping("login")
-	public String loginPro(MemberVO member, String auto, Model model, HttpServletResponse response) {
+	public String loginPro(MemberVO member, String auto, Model model, HttpServletResponse response,HttpSession session) {
 		System.out.println("로그인 처리 요청!!");
 		
 		System.out.println("auto : " + auto);
 		
 		int result = memberService.login(member, auto, response);
+		
+		String prevPage = null; 
+		if(session.getAttribute("prevPage") != null) {
+			prevPage = (String)session.getAttribute("prevPage"); 
+			session.removeAttribute("prevPage");
+		}
+		if(prevPage != null) {
+			return "redirect:"+prevPage;
+		}
+		
 		model.addAttribute("result", result);
 		
 		return "member/loginPro";

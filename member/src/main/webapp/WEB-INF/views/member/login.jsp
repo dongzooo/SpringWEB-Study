@@ -7,6 +7,13 @@
 	<title>login</title>
 	<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
 </head>
+<script>
+					let msg = '${msg}';
+					console.log(msg);
+					if(msg) {
+						alert(msg + " : 로그인 해주세요..."); 
+					}
+				</script>
 <body>
 	<%-- 로그인 이미 했을때, main 돌리기 --%>
 	<c:if test="${sessionScope.memId != null}"> 

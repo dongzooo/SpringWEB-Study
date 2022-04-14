@@ -121,7 +121,12 @@
 		    <version>1.4</version>
 		</dependency>
 		
-		
+		<!-- aop 위한 aspectj weaver 추가(버전은 el, scope삭제) : https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
 		
 		
 				
